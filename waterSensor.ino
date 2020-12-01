@@ -8,9 +8,15 @@
 
 // assumes depth sensor is on analog pin 0 ("S" pin of the sensor)
 const int depthSensorPin = A0; 
-const int depthSensorEmpty = 0;
-const int depthSensorFull = 200;
+const int depthSensorLow  = 400;
+const int depthSensorHigh = 800;
+const int depthSensorMid  = (depthSensorLow + depthSensorHigh) / 2;
 int depthSensorLastValue = 0;
+
+const int pumpPin = D9;
+const int pumpPinOn = 1;
+const int pumpPinOff = 0;
+
 
 // setLED inverts the LED request, so 1 == "on"
 void setLED (int r, int g, int b) {
@@ -29,6 +35,8 @@ void setup() {
   while (!HTS.begin()) {
     Serial.println("Failed to initialize humidity temperature sensor!");
   }
+
+  pinMode(pumpPin, OUTPUT);
   
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
@@ -39,7 +47,7 @@ void loop() {
   // read the depth sensor
   int depthValue = analogRead(depthSensorPin);
   depthSensorLastValue = depthValue;
-  int depthValuePercent = map (depthValue, depthSensorEmpty, depthSensorFull, 0, 100);
+  int depthValuePercent = map (depthValue, depthSensorLow, depthSensorHigh, 0, 100);
 
   // Passing in FAHRENHEIT as the unit parameter to ENV.readTemperature(...),
   // allows you to read the sensor values in imperial units
@@ -47,16 +55,16 @@ void loop() {
   float humidity    = HTS.readHumidity();
 
   // print the temperature to lcd line 0 and serial
-  String firstLine = "Temp=";
+  String firstLine = "T=";
   firstLine += int(round(temperature));
   firstLine += char(0xDF);
-  firstLine += "F            ";
+  firstLine += "F,";
   Serial.print("Temp=");
   Serial.print(temperature);
   Serial.print("°F");
 
   // print the humidity to lcd line 0 and serial
-  firstLine += " Humi=";
+  firstLine += " H=";
   firstLine += int(round(humidity));
   firstLine += "%             ";
   Serial.print(" Humi=");
@@ -68,7 +76,7 @@ void loop() {
   secondLine += depthValue;
   secondLine += " (";
   secondLine += depthValuePercent;
-  secondLine += "%)";
+  secondLine += "%)              ";
   Serial.print("Depth=");
   Serial.print(depthValue);
   Serial.print(" (");
@@ -82,15 +90,28 @@ void loop() {
   lcd.setCursor(0, 1);
   lcd.print(secondLine);
 
-  //set LED depending on percentage
-  if (depthValuePercent > 80)  {
-    setLED (0,1,0); // green
-  } else if (depthValuePercent > 10) { 
-    setLED (1,1,0); // yellow
-  } else { // below 10%
-    setLED (1,0,0); // red
+  // turn the pump on if it's less than 50% full, otherwise leave off
+  if (depthValue < depthSensorMid) {
+    digitalWrite(pumpPin, pumpPinOn);
+  } else {
+    digitalWrite(pumpPin, pumpPinOff);
+  }
+  
+  //set LED depending on value
+  if (depthValue > depthSensorHigh) {
+    setLED (1,0,0); // red means overfilling!
+  } else if (depthValue > depthSensorMid)  {
+    setLED (0,1,0); // green means a good level
+  } else if (depthValue > depthSensorLow) { 
+    setLED (1,1,0); // yellow means low but should be filling
+  } else { 
+    setLED (0,0,1); // blue means very low and should be filling
   }
   
   // this sets the frequency at which we sample
-  delay(500);
+  // but only take a break if the pump is off
+  if (depthValue > depthSensorMid)
+    delay(1 * 1000); // 10 sec seems like long enough
+  else 
+    delay(250); // 0.25 sec while filling
 }
