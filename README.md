@@ -49,4 +49,6 @@ Under the tree, I used a chopstick to hang the depth sensor in the water, and at
 
 <img src="depthSensorAndTree.jpeg" alt="water level sensor" width="400"/>
 
+Now when we water the tree, instead of crouching under the tree to try to peak at the water line, while pouring water from a watering can awkwardly, doing our best spiderman impression, we can just plug in the circuit, and refill the bowl on the side easily.  In theory, I could just leave this plugged in all the time, but for that, I'd probably want a depth sensor in the source bowl too so the pump turns off when the source bowl is low.  Otherwise the pumps could just go forever. Maybe I'll add that next.
+
 Good luck!  Let me know if you have any tips on improvements.
