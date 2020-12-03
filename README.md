@@ -6,7 +6,7 @@ This little project automatically waters your Christmas tree for you.  We got ti
 
 To detect the water level, I used one of these depth sensors.  +/- are VCC and ground, and `S` is the output level, in analog (10 bits, so 1024 max).
 
-<img src="waterLevelSensor.jpg" alt="water level sensor" width="100" style="transform:rotate(180deg);"/>
+<img src="waterLevelSensor.jpg" alt="water level sensor" width="100"/>
 
 I ordered 10 of these, and all 10 are very different from each other.  So I put placeholders in the code to read the Low and High settings from the exact sensor you're using.  
 
