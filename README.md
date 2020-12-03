@@ -43,10 +43,10 @@ The pump and relays could also likely be had for cheaper, but I intend to reuse 
 
 The final circuit got plugged into the wall outlet to drive via the microusb port at 5V.  I put the whole setup on a stool next to the tree to keep it elevated about the tree's water.  That way, the water doesn't get siphoned back out when the pump stops.  The relay light turns on and red when it's off, but turns off when the pump is going.  Here's an ugly photo of the setup next to the tree.
 
-<img src="circuitAndPump.jpeg" alt="water level sensor" width="200"/>
+<img src="circuitAndPump.jpeg" alt="water level sensor" width="400"/>
 
 Under the tree, I used a chopstick to hang the depth sensor in the water, and attached the water line to it as well.  It's hard to get a good picture of it, so here's a bad picture.
 
-<img src="depthSensorAndTree.jpeg" alt="water level sensor" width="200"/>
+<img src="depthSensorAndTree.jpeg" alt="water level sensor" width="400"/>
 
 Good luck!  Let me know if you have any tips on improvements.
