@@ -18,7 +18,7 @@ Hooking this up is straightforward.  You connect an output pin from the Arduino 
 
 ## Microcontroller
 
-<img src="https://store-cdn.arduino.cc/usa/catalog/product/cache/1/image/1040x660/604a3538c15e081937dbfbd20aa60aad/a/b/abx00028_featured_1.png" alt="water level sensor" width="100"/>
+<img src="https://store-cdn.arduino.cc/usa/catalog/product/cache/1/image/1040x660/604a3538c15e081937dbfbd20aa60aad/a/b/abx00028_featured_1.png" alt="water level sensor" width="200"/>
 
 I chose the [Arduino Nano Every](https://store.arduino.cc/usa/nano-every), mostly because it's small and cheap.  I find it a little more difficult to use than the Nano 33 line, but it's still passable.  The libraries are a bit more finicky (for example, the default LCD library would not compile for it) and the LED is only on/off, not RGB.  For a simple project like this, it's just fine since all you need for this project is 2 GPIO pins - 1 input for the depth sensor, and 1 output for the pump control.  I'm sure there are even cheaper options out there.
 
