@@ -6,7 +6,7 @@ This little project automatically waters your Christmas tree for you.
 
 To detect the water level, I used one of these depth sensors.  +/- are VCC and ground, and `S` is the output level, in analog (10 bits, so 1024 max).
 
-<img src="waterLevelSensor.jpg" alt="water level sensor" width="200"/>
+<img src="waterLevelSensor.jpg" alt="water level sensor" width="100"/>
 
 I ordered 10 of these, and all 10 are very different from each other.  So I put placeholders in the code to read the Low and High settings from the exact sensor you're using.  
 
@@ -14,13 +14,11 @@ I ordered 10 of these, and all 10 are very different from each other.  So I put 
 
 For a simple pump, I bought a [kit](https://smile.amazon.com/gp/product/B07TMVNTDK) that's normally used for watering plants.  This kit includes submersible pumps, tubing, and relays to switch the pump on and off.  
 
-Hooking this up is straightforward.  The pump wires get attached to the "normally closed" (NC) pair on the output of the relay, and one pin drives whether the switch is open or closed, so I hook that up to the digital PWM output of the microcontroller.
+Hooking this up is straightforward.  You connect an output pin from the Arduino into the "IN1" input pin of the relay board.  Then the pump itself hooks up to the NC (normally closed) output of the relay and the 5V line of the Arduino.  You can't just hook up the pump to the Arduino output pin directly, because the current on those Arduino pins is limited to 20mA.  The 5V rail line can supply much more current - enough to drive the pump at least.
 
 ## Microcontroller
 
-I chose the [Arduino Nano Every](https://store.arduino.cc/usa/nano-every), mostly because it's small, cheap and has an LED on it that can signal different colors.
-
-For fun, I also added a 16x2 LCD display, but that's not necessary by any means as you can mostly go by the LED.
+I chose the [Arduino Nano Every](https://store.arduino.cc/usa/nano-every), mostly because it's small, cheap.  I find it a little more difficult to use than the Nano 33 line, but it's still passable.  The libraries are a bit more finicky (for example, the default LCD library would not work with it) and the LED is only on/off, not RGB.  For a simple project like this, it's just fine.
 
 ## Code
 
@@ -40,5 +38,15 @@ To minimize power usage, I put the microcontroller to sleep for 10 seconds if ev
 So the total cost per unit is $18.87.  That's a bit higher than I expected.  It looks like a cost reduced version of the Nano Every can be had for about $5 in bulk, so that would save $6, but I like to support Arduino so I buy the name brand ones.  You might even have extra ones sitting around from previous projects (like I do now since I bought three).  
 
 The pump and relays could also likely be had for cheaper, but I intend to reuse the parts for a plant watering system after Christmas, so I opted for the bigger set.
+
+## Result
+
+The final circuit got plugged into the wall outlet to drive via the microusb port at 5V.  I put the whole setup on a stool next to the tree to keep it elevated about the tree's water.  That way, the water doesn't get siphoned back out when the pump stops.  The relay light turns on and red when it's off, but turns off when the pump is going.  Here's an ugly photo of the setup next to the tree.
+
+<img src="circuitAndPump.jpg" alt="water level sensor" width="200"/>
+
+Under the tree, I used a chopstick to hang the depth sensor in the water, and attached the water line to it as well.  It's hard to get a good picture of it, so here's a bad picture.
+
+<img src="depthSensorAndTree.jpg" alt="water level sensor" width="200"/>
 
 Good luck!  Let me know if you have any tips on improvements.
